@@ -24,7 +24,7 @@ with col2:
 chart_prompt = st.text_area('Enter your chart/diagram details (be as specific as possible): ')
 
 button = st.button("Generate")
-if button or st.session_state.get("submit"):
+if button:
     if not st.session_state.get("OPENAI_API_KEY"):
         st.error("Please configure your OpenAI API key!")
     elif not chart_prompt:
@@ -35,22 +35,10 @@ if button or st.session_state.get("submit"):
         # Run OpenAI API call and receive md response
         result = SendChatRequest(chart_prompt, chart_type, orientation)
 
-        # Run Mermaid.js query and receive svg response
-        # result = "graph TD\nA[Christmas] -->|Get money| B(Go shopping)\nB --> C{Let me think}\nC -->|One| D[Laptop]\nC -->|Two| E[iPhone]\nC -->|Three| F[fa:fa-car Car]"
-
         # Display the image using streamlit
         try:
             diagram_img = generate_diagram(result)
             st.image(diagram_img, use_column_width=True)
         except:
             st.error("Something went wrong. Please try again or slightly rephrase your prompt.")
-
-
-        # TODO: Add a button to download the image
-        # if st.button("Download Image"):
-        #     # Set the file name and file type
-        #     file_name = 'image.png'
-        #     file_type = 'png'
-
-        #     # Create a link for downloading
-        #     st.download_button(label="Click here to download", data=diagram_img, file_name=file_name, mime=file_type)
+        st.write(f'Resulting markdown: {result}')

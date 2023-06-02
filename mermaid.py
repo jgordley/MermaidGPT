@@ -4,14 +4,9 @@ import requests
 import io
 
 def generate_diagram(graph):
-  # Remove ```mermaid and ``` from the response
-  graph = graph.replace('```mermaid', '')
-  graph = graph.replace('```', '')
-
-  print(graph)
-
-  graphbytes = graph.encode("ascii")
-  base64_bytes = base64.b64encode(graphbytes)
-  base64_string = base64_bytes.decode("ascii")
-  img = Image.open(io.BytesIO(requests.get('https://mermaid.ink/img/' + base64_string).content))
-  return img
+    graphbytes = graph.encode("ascii")
+    base64_bytes = base64.b64encode(graphbytes)
+    base64_string = base64_bytes.decode("ascii")
+    img = Image.open(io.BytesIO(requests.get(
+        'https://mermaid.ink/img/' + base64_string).content))
+    return img

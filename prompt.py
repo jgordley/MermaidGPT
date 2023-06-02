@@ -33,6 +33,13 @@ def SendChatRequest(prompt, chart_type, direction):
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=full_prompt,
-        max_tokens=150
+        max_tokens=1000
     )
-    return response.get('choices')[0].get('message').get('content')
+    graph = response.get('choices')[0].get('message').get('content')
+
+    # Remove ```mermaid and ``` from the response
+    graph = graph.replace('```mermaid', '')
+    graph = graph.replace('```', '')
+
+    print(graph)
+    return graph

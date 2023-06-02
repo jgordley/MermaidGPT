@@ -28,9 +28,8 @@ def sidebar():
             "🧜‍♀️MermaidGPT is a simple ChatGPT and Mermaid.js integration that allows you to generate diagrams using prompts. ChatGPT generates markdown that is rendered into an image by Mermaid.js in the backend."
         )
         st.markdown(
-            "This tool is a work in progress. "
-            "You can contribute to the project on [GitHub](https://github.com/jgordley/MermaidGPT) "
-            "with your feedback and suggestions💡"
+            "Contribute here: [GitHub](https://github.com/jgordley/MermaidGPT) "
+            "Feedback and suggestions are appreciated!"
         )
         st.markdown("Made by [Jack Gordley](https://twitter.com/jackgordley)")
         st.markdown("---")
