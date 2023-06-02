@@ -27,7 +27,7 @@ button = st.button("Generate")
 if button or st.session_state.get("submit"):
     if not st.session_state.get("OPENAI_API_KEY"):
         st.error("Please configure your OpenAI API key!")
-    elif chart_prompt:
+    elif not chart_prompt:
         st.error("Please enter a chart prompt!")
     else:
         st.session_state["submit"] = True
@@ -39,8 +39,12 @@ if button or st.session_state.get("submit"):
         # result = "graph TD\nA[Christmas] -->|Get money| B(Go shopping)\nB --> C{Let me think}\nC -->|One| D[Laptop]\nC -->|Two| E[iPhone]\nC -->|Three| F[fa:fa-car Car]"
 
         # Display the image using streamlit
-        diagram_img = generate_diagram(result)
-        st.image(diagram_img, use_column_width=True)
+        try:
+            diagram_img = generate_diagram(result)
+            st.image(diagram_img, use_column_width=True)
+        except:
+            st.error("Something went wrong. Please try again or slightly rephrase your prompt.")
+
 
         # TODO: Add a button to download the image
         # if st.button("Download Image"):
