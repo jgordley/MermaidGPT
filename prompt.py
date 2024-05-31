@@ -1,15 +1,25 @@
 import openai
 import streamlit as st
 
+
 # Configure openai api key
 def set_openai_api_key():
     # Get streamlit session state for openai key and set it
     openai.api_key = st.session_state.get("OPENAI_API_KEY")
 
+
 def generate_prompt(prompt, chart_type, direction):
     # Preset instruction messages for the model
-    messages = [{"role": "user", "content": "You are a bot that only communicates in Mermaid.js formatted markdown."},
-                {"role": "user", "content": "Do not provide any additional information or notes, ONLY markdown."}]
+    messages = [
+        {
+            "role": "user",
+            "content": "You are a bot that only communicates in Mermaid.js formatted markdown.",
+        },
+        {
+            "role": "user",
+            "content": "Do not provide any additional information or notes, ONLY markdown.",
+        },
+    ]
 
     # Generate prompt using OpenAI model
     prompt_formatted = f"""
@@ -23,6 +33,7 @@ with the following details and only return the markdown that can be pasted into 
 
     return messages
 
+
 # Generate response using OpenAI model
 def SendChatRequest(prompt, chart_type, direction):
 
@@ -30,16 +41,14 @@ def SendChatRequest(prompt, chart_type, direction):
     full_prompt = generate_prompt(prompt, chart_type, direction)
 
     # Send prompt to OpenAI
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=full_prompt,
-        max_tokens=1000
+    response = openai.chat.completions.create(
+        model="gpt-4o", messages=full_prompt, max_tokens=1000
     )
-    graph = response.get('choices')[0].get('message').get('content')
+    graph = response.choices[0].message.content
 
     # Remove ```mermaid and ``` from the response
-    graph = graph.replace('```mermaid', '')
-    graph = graph.replace('```', '')
+    graph = graph.replace("```mermaid", "")
+    graph = graph.replace("```", "")
 
     print(graph)
     return graph
