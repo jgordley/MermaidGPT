@@ -4,9 +4,10 @@ import requests
 import io
 
 def generate_diagram(graph):
-    graphbytes = graph.encode("ascii")
-    base64_bytes = base64.b64encode(graphbytes)
+    graphbytes = graph.encode("utf-8")
+    base64_bytes = base64.urlsafe_b64encode(graphbytes)
     base64_string = base64_bytes.decode("ascii")
-    img = Image.open(io.BytesIO(requests.get(
-        'https://mermaid.ink/img/' + base64_string).content))
+    response = requests.get("https://mermaid.ink/img/" + base64_string, timeout=15)
+    response.raise_for_status()
+    img = Image.open(io.BytesIO(response.content))
     return img
