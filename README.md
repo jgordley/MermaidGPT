@@ -2,6 +2,7 @@
 
 A simple Streamlit app that turns text prompts into [Mermaid.js](https://mermaid.js.org/) diagrams using OpenAI, Anthropic, or Gemini.
 
+
 ![MermaidGPT Screenshot](mermaid-screenshot.png)
 
 ## Setup
